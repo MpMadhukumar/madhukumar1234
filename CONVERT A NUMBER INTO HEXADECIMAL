@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+char* toHex(int num) {
+    if (num == 0) return "0";
+    
+    char* hex = (char*)malloc(9 * sizeof(char)); // Allocate memory for the result string
+    char* hexDigits = "0123456789abcdef";
+    unsigned int n = num;
+    int i = 0;
+
+    while (n > 0) {
+        hex[i++] = hexDigits[n % 16];
+        n /= 16;
+    }
+
+    hex[i] = '\0';
+
+    // Reverse the string
+    for (int j = 0; j < i / 2; j++) {
+        char temp = hex[j];
+        hex[j] = hex[i - j - 1];
+        hex[i - j - 1] = temp;
+    }
+
+    return hex;
+}
