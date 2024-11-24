@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Helper function to count the number of 1s in the binary representation of a number
+int countOnes(int num) {
+    int count = 0;
+    while (num) {
+        count += num & 1;
+        num >>= 1;
+    }
+    return count;
+}
+
+char** readBinaryWatch(int turnedOn, int* returnSize) {
+    char** result = (char**)malloc(720 * sizeof(char*)); // Maximum possible times is 720 (12 hours * 60 minutes)
+    *returnSize = 0;
+
+    for (int h = 0; h < 12; h++) {
+        for (int m = 0; m < 60; m++) {
+            if (countOnes(h) + countOnes(m) == turnedOn) {
+                result[*returnSize] = (char*)malloc(6 * sizeof(char)); // Allocate memory for each time string
+                sprintf(result[*returnSize], "%d:%02d", h, m);
+                (*returnSize)++;
+            }
+        }
+    }
+
+    return result;
+}
