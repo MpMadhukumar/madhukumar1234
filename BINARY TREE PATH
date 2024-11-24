@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Assuming struct TreeNode is already defined
+// struct TreeNode {
+//     int val;
+//     struct TreeNode *left;
+//     struct TreeNode *right;
+// };
+
+void findPaths(struct TreeNode* root, char** paths, int* returnSize, char* path, int pathLen) {
+    if (root == NULL) return;
+
+    int len = sprintf(path + pathLen, "%d", root->val);
+    pathLen += len;
+
+    if (root->left == NULL && root->right == NULL) {
+        paths[*returnSize] = (char*)malloc((pathLen + 1) * sizeof(char));
+        strcpy(paths[*returnSize], path);
+        (*returnSize)++;
+    } else {
+        path[pathLen++] = '-';
+        path[pathLen++] = '>';
+        findPaths(root->left, paths, returnSize, path, pathLen);
+        findPaths(root->right, paths, returnSize, path, pathLen);
+    }
+}
+
+char** binaryTreePaths(struct TreeNode* root, int* returnSize) {
+    *returnSize = 0;
+    char** paths = (char**)malloc(100 * sizeof(char*));
+    char path[1000];
+    findPaths(root, paths, returnSize, path, 0);
+    return paths;
+}
