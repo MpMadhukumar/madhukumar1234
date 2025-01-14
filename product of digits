@@ -1,0 +1,26 @@
+#include<stdio.h>
+int main()
+{
+    int num,digit,product=1;
+    printf("enter the number:");
+    scanf("%d",&num);
+    if(num<0)
+    {
+        num=-num;
+    }
+    if(num==0)
+    {
+        product=0;
+    }
+     else 
+    {
+    while (num>0)
+    {
+        digit=num%10;
+        product*=digit;
+        num/=10;
+    }
+    }
+    printf("the product of the digits is:%d\n",product);
+    return 0;
+}
